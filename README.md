@@ -10,6 +10,30 @@ Files that I typically need to include in LaTeX documents.
   git version information in a format that can be used inside
   LaTeX files.
 
+Usage
+=====
+
+The LaTeX files are straightforward. For the Git version information,
+I put something like the following in my makefile:
+
+```{make}
+.PHONY: VERSION.tex
+VERSION.tex:
+	echo "\newcommand\VERSION{$$(./version_git.sh)}" > $@
+mainpaper.pdf: mainpaper.tex VERSION.tex
+	# Commands
+```
+
+and then the following goes in `mainpaper.tex`
+
+```{latex}
+\input{VERSION}
+\date{\VERSION}
+\pagestyle{fancy}
+\fancyhead[LE,LO]{\small\slshape\VERSION}
+\fancyhead[RE,RO]{\small\slshape\leftmark}
+```
+
 License and copyright
 =====================
 
